@@ -1,10 +1,9 @@
-from django.db import models
-from .models import OrderStatus  # Make sure this import exists
+from django.db import models 
 
 
-class Order(models.Model):
-      # your existing fields...
-      status = models.ForeignKey(OrderStatus, on_delete=models.SET_NULL, null=True)
+class OrderStatus(models.Model):
+       name = models.CharField(max_length=50, unique=True)
 
 
-      # other fields and methods...
+       def __str__(self):
+          return self.name
