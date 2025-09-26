@@ -5,12 +5,27 @@ from .models import MenuItem
 from .serializers import MenuItemSerializer
 
 
-class MenuItemsByCategoryView(APIView):
+
+class MenuItemPagination(PageNumberPagination):
+
+    page_size = 5
+    page_size_query_param = "page_size"
+    max_page_size = 50
+
+
+
+class MenuItemsByCategoryView(viewsets. ViewSet):
+ permission_classes = [permissions.AllowAny]  # open for all
+
+
       def get (self, request):
-        category_name = request.query_params.get("category", None)
-        if category_name:
-             items = MenuItem.objects.filter(category__category_name=category_name)
-             else:
-                items = MenuItem.objects.all()
-            serializer = MenuItemSerializer(items, many=True)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+        query = request.query_params.get("search", None)
+        items = MenuItem.objects.all()
+        if query:
+             items = item.filter(name__icontains=query)
+             
+
+        paginator = MenuItemPagination()
+        paginated_items = paginator.paginate_queryset(items, request)
+        serializer = MenuItemSerializer(paginated_items, many=True)
+        return paginator.get_paginated_response(serializer.data)
