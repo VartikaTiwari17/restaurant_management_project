@@ -10,7 +10,9 @@ class Category(models.Models):
 class MenuItem(models.Model):
 
     name = models.CharField(max_length=200)
+    description = models.TextField(blank=True)
     price = models.DecimalField(max_digits=8, decimal_places=2)
+    available = models.BooleanField(default=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="menu_items")
 
      def __str__(self):
