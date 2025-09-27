@@ -1,15 +1,18 @@
 from rest_framework import serializers
-from .models import MenuItem
+from .models import  Order, OrderItem
 
 
-class MenuItemSerializer(serializers.ModelSerializer):
+class OrderItemSerializer(serializers.ModelSerializer):
      class Meta:
-        model = MenuItem
-        fields = ["id", "name","description", "price", "available", "category"]
+        model = OrderItem
+        fields = [ 'product name','quantity' ,'price',]
 
 
-        def validate_price(self, value):
-             if value < 0:
+    class OrderSerializer(serializers.ModelsSerializer):
+        items = OrderItemSerializer(many=True, read_only=True)
 
-                raise serializers.ValidationError("Price must be s positive number.")
-                return value
+
+
+        class Meta:
+            models = Ordr 
+            fields = ['id', 'customer', 'total_price','status', 'created_at', 'items']
