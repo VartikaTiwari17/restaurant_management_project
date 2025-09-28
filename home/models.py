@@ -1,14 +1,14 @@
 from django.db import models
+from decimal import Decimal
 
 
 
-class ContactFromSubmission(models.Model):
+class MenuItem(models.Model):
      name = models.CharField(max_length=255)
-     email = models.EmailField()
-     message = models.TextField()
-     submitted_at = models.DataTimeField(auto_now_add=True)
+     description  = models.TextField(blank=True)
+     price = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
 
 
 
      def __str__(self):
-        return f"{self.name} - {self.email}"
+        return self.name
