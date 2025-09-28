@@ -1,8 +1,8 @@
-from rest_framework.generics import ListAPIView
-from .models import MenuCategory
-from .serializer import MenuCategorySerializer
+from rest_framework import generics 
+from .models import ContactFormSubumission
+from .serializer import ContactFormSubumissionSerializer
 
 
-class MenuCategoryListAPIView(ListAPIView):
-    queryset = MenuCategory.objects.all()
-    serializer_class = MenuCategorySerializer
+class ContactFormSubmission(generics.CreateAPIView):
+    queryset = ContactFormSubmission.objects.all()
+    serializer_class = ContactFormSubmissionSerializer
