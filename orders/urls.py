@@ -1,11 +1,6 @@
-from django.urls import path, include
-from rest_framework.routers import DeafultRouter
-from .view import OrderViewSet
-
-
-router = DefaultRouter()
-router.register(r'orders', OrderViewSet, basename='order')
+from django.urls import path
+from .view import CouponValidationView
 
 urlpatterns = [
-    path ('api/', include(router.urls)),
+    path ('coupons/validate/' , CouponValidationView.as_view(), name="coupon-validatei"),
 ]
