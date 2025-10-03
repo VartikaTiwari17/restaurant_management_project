@@ -1,38 +1,28 @@
-from reat_framework import status, viewsets
-from rest_framework.decorators import action
-from rest_framework. response import response
-from django.shortcuts import get_objects_or_404
-from .models import Order
-from .serializers import OrderSerializer
+from reat_framework. views import APIView
+from rest_framework. response import Response
+from rest_framework import status
+from django.utils import timezone
+from .models import Coupon
 
 
-class OrderViewSet(viewsets.ModelViewSet):
-      queryset = Order.object.all()
-      serializer_class = OrderSerializer
+class CouponVaildationView(APIView):
+       def post (self, request):
+          code = request.data.get("code")  # User se coupon code le raha hai
 
-      @action(detail=True, methods=['delete'], url_path='cancel')
-      def cancel_order(self, request, pk=None):
-          order = get_object_or_404(Order, pk=pk)
+            if not code:
+                return Response({"error": "Coupon code is required"}, status=status.HTTP_404_BAD_REQUEST)
 
-
-          #Ensure user owns the order
-          if order.usr  != request.user:
-              return Response(
-                {"error": "You do not have permission to cancel this order."},
-                status=status.HTTP_403_FORBIDDEN
-              )
-              if order.status =='CANCELLED':
-                   return Response(
-                    {"message": "Order is already canceelled."},
-                    status=status.HTTP_404_BAD_REQUEST
-                   )
-
-                   #update status
-                   order.status = 'CANCELLED'
-                   order.save()
-
-
-                   return Response(
-                    {"message": f"Order {order.order_id} has been cancelled."},
-                    status=status.HTTP_200_OK
-                   )
+          try:
+            coupon = Coupon.objects.get(code=code, is_active=True)
+    except Coupon.DoesNotExist:
+         return Response({"error": "Invalid coupon code"},  status=status.HTTP_404_BAD_REQUEST)
+        
+        
+        today = timezone.now().date()
+        if coupon.valid_form <= today <= coupon.valid_untill:
+             return Response({
+                "success": True,
+                "discount_percentage": str(coupon.discount_percentage)
+             }, status=status.HTTP_200_OK)
+        else:
+            return Response({"error": "Coupon is expired or not valid today."})
