@@ -1,8 +1,11 @@
 from rest_framework import generics 
-from .models import ContactFormSubumission
-from .serializer import ContactFormSubumissionSerializer
+from .models import Table
+from .serializer import TableSerializer
 
 
-class ContactFormSubmission(generics.CreateAPIView):
-    queryset = ContactFormSubmission.objects.all()
-    serializer_class = ContactFormSubmissionSerializer
+class AvailableTablesAPIView(generics.ListAPIView):
+    serializer_class = TableSerializer
+
+
+    def get_queryset(self):
+        return Table.objects.filter(is_available=True)
