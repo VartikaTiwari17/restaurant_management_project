@@ -1,9 +1,9 @@
 from rest_framework import serializers
-from .models import Order
+from .models import Table
 
 
-class OrderSerializer(serializers.ModelSerializer):
+class TableSerializer(serializers.ModelSerializer):
       class Meta:
-         model = Order
-         fields = ['id', 'order_id', 'user', 'status', 'created_at']
-         read_only_fields = ['id', 'order_id', 'created_at', 'user']
+         model = Table
+         fields = ['table_number', 'capacity', 'is_available', 'status']
+         
