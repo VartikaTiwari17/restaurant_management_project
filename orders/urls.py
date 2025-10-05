@@ -1,6 +1,6 @@
 from django.urls import path
-from .view import UpdateOrderStatusView
+from .view import get_order_status
 
 urlpatterns = [
-    path (update-order-status/' , UpdateOrderStatusView.as_view(), name="update_order_status"),
+    path ('order-status/<int:order_id>/' , get_order_status, name="get-order-status"),
 ]
