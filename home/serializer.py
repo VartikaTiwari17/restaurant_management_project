@@ -1,9 +1,9 @@
 from rest_framework import serializers
-from .models import MenuItem
+from .models import MenuCategory 
 
 
-class DailyspecialSerializer(serializers.ModelSerializer):
+class MenuCategorySerializer(serializers.ModelSerializer):
       class Meta:
-         model = MenuItem
-         fields = ['id', 'name', 'price']
+         model = MenuCategory
+         fields = ['id', 'name']
          
