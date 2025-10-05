@@ -1,11 +1,11 @@
-from rest_framework import generics 
-from .models import Table
-from .serializer import TableSerializer
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from .models import MenuItem
+from .serializers import DailySpecialSerializer
 
 
-class AvailableTablesAPIView(generics.ListAPIView):
-    serializer_class = TableSerializer
-
-
-    def get_queryset(self):
-        return Table.objects.filter(is_available=True)
+@api_view(['GET'])
+def daily_specials(request):
+    specials = MenuItem.objects.filter(is_daily_special=True)
+    serializer = DailySpecialSerializer(specials, many=True)
+    return Response(serializer.data)
