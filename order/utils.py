@@ -1,28 +1,32 @@
-import string
-import secrets
-from .models import Coupon  # Make sure you have a Coupon model with a 'code' field
+import logging
+from django.core.exception import ObjectDoesNotExist
+from .models import Order
 
 
-def generate_coupon_code(length=10);
+# Configure logger for this module
+logger = logging.getlogger(__name__)
+
+
+def update_order_status(order_id, new_status):
+    """
+    Update the status of an order given its ID.
+
+    Args:
+      order_id (int): ID of the order tp update.
+      new_status (str): LNow status to set for the order.
+
+Returns:
+   bool:  True if update was successful, False otherwise.
    """
-
- Generate a unique alphanumeric coupon code.
-
-
- Args:
-    length (int): Length of the coupon code. Default is 10.
-
-
-    Returns:
-        
-        str: Unique Coupon Code.
-  """
-
-  character = string.ascii_letters + string.digits  # a-z, A-Z, 0-9,
-
-
-while True:
-     code = ''.join(secrets.choice(characters) for _ in range(length))
-     # Check uniqueness in the database
-     if not Coupon.objects.filter(code=code).exists():
-        return code
+   try:
+    order = Order.objects.get(id=order_id)
+    old_status = getattr(order, 'status', None)
+    order.save()
+    logger.info(f'Order ID {order_id} status updated from '{old_status}' to '{new_status}'")
+    return True
+except ObjectDoesNotExist:
+    logger.error(f"Order with ID{order_id} not found.")
+    return False 
+    except Exception as e:
+       logger.error(f"Error updating order ID {order_id} status: {str(e)}")
+       return False
