@@ -1,8 +1,8 @@
 from django.urls import path
-from .view import daily_specials
+from .view import daily_restaurant_info
 
 
 urlpatterns = [
-    path('api/daily-specials/', daily_specials,  name='daily_specials'),
+    path('api/restaurant/', get_restaurant_info,  name='get_restaurant_info'),
 
 ]
