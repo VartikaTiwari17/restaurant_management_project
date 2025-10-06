@@ -5,6 +5,6 @@ from .serializers import UserReviewSerializer
 
 
 class MenuCategoryViewSet(viewset.ModelViewSet):
-    queryset = MenuCategory.objects.all()
+    queryset = MenuCategory.objects.all().order_vy('name')
     serializer_class = MenuCategorySerializer
 
