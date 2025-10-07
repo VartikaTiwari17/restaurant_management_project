@@ -1,28 +1,16 @@
-from datetime import datetime, time
+import re 
 
-
-def is_restaurant_open():
+def is_valid_email(email: str) -> bool:
     """
-    Chech if  the restaurant is currently open based on hardcoded opening hours. 
-    Retyrn True if open, False otherwise.
+    Validate an email address using regex.
+    Returns True if the email is valid, False otherwise.
     """
 
 
-    # Get current datetime info
-    now = datetime.now()
-    current_time = now.time()
-    current_day = now.weekday()   # Monday = 0, Sunday = 6
+
+    # Basic email regex pattern 
+    email_regex = r"([a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"
 
 
-
-    # Example opening hours
-    # Weekend (Mon-Fri): 9AM to 10PM
-    weekday_open = time(9,0)  # 09:00 AM
-    weekday_close = time(23,0) # 11:00 PM
-
-
-    # Check weekday vs weekend
-    if current_day <5:  # Monday to Friday
-       return weekday_open <= current_time <= weekday_close
-    else:  # Saturday, Sunday
-        return weekend_open <= current_time <= weekend_close
+    # Check if the email matches the pattern
+    return re.match(email_regex, email) is not None
