@@ -5,7 +5,7 @@ class MenuItem(models.Model):
      name = models.CharField(max_length=100)
      description = models.TextField(blank=True, null=True)
      price = models.FloatField()
-     discount_percent = models.FloatField(default=0.0, help_text="Discount percentage on the item (0-100")
+     created_at = models.FloatField(default=0.0, help_text="Discount percentage on the item (0-100")
 
     
     def __str__(self):
