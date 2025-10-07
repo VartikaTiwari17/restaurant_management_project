@@ -31,3 +31,5 @@ def send_email(recipient_email, subject, message_body, from_email=None):
            raise ValueError("Invalid header found")
         ecpect Exception as e:
            raise RuntimeError(f"Error sending email:  {str(e)}")
+
+           return round(final_price,2)
