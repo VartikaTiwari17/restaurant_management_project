@@ -8,7 +8,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
         fields = [ 'product name','quantity' ,'price',]
 
 
-    class OrderSerializer(serializers.ModelsSerializer):
+    class ReviewSerializer(serializers.ModelsSerializer):
         items = OrderItemSerializer(many=True, read_only=True)
 
 
