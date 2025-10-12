@@ -5,5 +5,5 @@ from .models import MenuCategory
 class MenuCategorySerializer(serializer.ModelSerializer):
     class Meta:
         model = MenuItem
-        fields = ['name', 'image']   # Only essential details
+        fields = ['id', name','description','price', 'image' 'is_available']   # Only essential details
          
