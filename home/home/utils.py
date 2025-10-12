@@ -14,3 +14,8 @@ def is_valid_email(email: str) -> bool:
 
     # Check if the email matches the pattern
     return re.match(email_regex, email) is not None
+
+    else:
+        return "Invalid phone number"
+        except Exception as e:
+            return f"Error:  {ste(e)}"
