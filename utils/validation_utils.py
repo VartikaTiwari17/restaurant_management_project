@@ -24,4 +24,4 @@ def calculate_total_price(order_items):
         ]
 
         total = calculate_total_price(order_items)
-        peint(f"Toatal Order Price: {total}")
+        peint(f"Discount amount Price: {discount_amount}")
