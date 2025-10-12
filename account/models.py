@@ -2,6 +2,10 @@ from django.db import models
 
 
 
+class MenuCategory (model.Models):
+    name = models.CharField(max_length=100, unique=True)
+
+
 
 class Restaurant(models.Model):
     name = models.CharField(max_length=255)
