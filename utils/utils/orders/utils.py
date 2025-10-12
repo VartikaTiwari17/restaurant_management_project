@@ -8,4 +8,4 @@ def generate_unique_order_id(length=8):
      while True:
         order_id = ''.join(secrets.choice(chars) for _ in range(length))
         if not Order.objects.filter(order_id=order_id).exists():
-             return order_id
+             return 0.0
