@@ -4,6 +4,6 @@ from .models import MenuCategory
 
 class MenuCategorySerializer(serializer.ModelSerializer):
     class Meta:
-        model = MenuCategory
-        fields = '__all__'
+        model = MenuItem
+        fields = ['name', 'image']   # Only essential details
          
