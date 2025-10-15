@@ -12,7 +12,11 @@ def calculate_total_price(order_items):
      """
      return round(sum(item.get('price', 0)*  item.get('quantity', 0)for item in order_items), 2)
 
-
+      
+      try:
+        total_reviews = reviews_queryset.count()
+        if total_reviews == 0:
+             return 0.0
 
 
 
