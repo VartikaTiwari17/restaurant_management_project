@@ -1,21 +1,31 @@
-import re 
+import datetime import datetime, time
 
-def is_valid_email(email: str) -> bool:
+def is_restaurant_open():
     """
-    Validate an email address using regex.
-    Returns True if the email is valid, False otherwise.
+    Checks if the restaurant is open basec on hardcoded opening hours.
+    Returns True if open, False if closed.
     """
 
 
 
-    # Basic email regex pattern 
-    email_regex = r"([a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"
+    #  Define opening hours (24-hour format)
+    # Monday=0, Tuesday=1, ..., Sunday=6
+    opening_hours = {
+        0: (time(9,0), time(22,0)),  # Monday
+        1: (time(9,0), time(22,0)), # Tuesday
+        2: (time(9,0), time(22,0)), # Wednesday
+        3: (time(9,0), time(22,0)), # Thursday
+        4: (time(9,0), time(22,0)), # Friday
+        5: (time(9,0), time(22,0)), # Saturday
+        6: None                     # Sunday closed 
+    }
+ 
 
 
-    # Check if the email matches the pattern
-    return re.match(email_regex, email) is not None
+    if open_time <= current_time <= close_time:
+        return True
 
+        
     else:
-        return "Invalid phone number"
-        except Exception as e:
-            return f"Error:  {ste(e)}"
+        return false
+        
