@@ -8,12 +8,11 @@ class Order(models.Model):
         ('PENDING', 'Pending'),
         ('PROCESSING', 'Processing'),
         ('DELIVERIED', 'Delivered'),
-        ('CANCELLED', 'Cancelled'),
-    ]
+         ]
 
 
     
-    user = models ForeignKey(User, on_delete=models.CASCADE)
+    order_id = models ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     total_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='PENDING')
