@@ -29,3 +29,6 @@ def calculate_total_price(order_items):
 
         total = calculate_total_price(order_items)
         peint(f"Discount amount Price: {discount_amount}")
+
+        except (TypeError, ValueError) as e:
+            raise ValueError(f"Invalid input: {e}")
