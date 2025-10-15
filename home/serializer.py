@@ -5,7 +5,7 @@ from .models import UserReview
 
 
 class UserReviewSerializer(serializer.ModelSerializer):
-    user_name = serializer.CharField(source='user.username', read_only=True)
+    category_name = serializer.CharField(source='user.username', read_only=True)
 
 
     class Meta:
