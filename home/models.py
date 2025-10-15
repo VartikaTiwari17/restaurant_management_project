@@ -2,15 +2,6 @@ from django.db import models
 
 
 
-class MenuCategory(models.Model):
-    name = models.CharField(max_length=100, unique=True)
-
-
-
-    def __str__(self)
-    return self.name
-
-
 class MenuItem(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
@@ -21,3 +12,16 @@ class MenuItem(models.Model):
 
      def __str__(self):
         return self.name
+
+        @classmethod
+        def get_items_by_cuisine(cls, cuisine_type):
+            """
+            Return a QuerySet of menu items filltered by the given cuisine type.
+
+            Args:
+            cuisine_type (str): The cuisine tpye to filter by. 
+
+            Returns:
+              QuerySet: A filtered QuerySet of MenuItem objects.
+              """
+              return cls.objects.filter(cuisine__iexact=cuisine_type)
