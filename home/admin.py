@@ -1,5 +1,12 @@
 from django.contrib import admin
-from .models import Table   # Import your Table model
+from .models import Table  
 
-# Register your models here
-admin.site.register(Table)
+
+ Register the Table model
+
+
+@admin.register(Table)
+class TableAdmin(admin.ModelAdmin):
+    list_display = ('table_number', 'capacity','is_available, 'location')
+    list_filter = ('is_available', 'location')
+    search_fields = ('table_number', 'location')
