@@ -1,14 +1,14 @@
-from .django.db import ModelSerializer
-from .models import UserReview
+from rest_framework import Serializers
+from .models import Table
 
 
 
 
-class UserReviewSerializer(serializer.ModelSerializer):
-    category_name = serializer.CharField(source='user.username', read_only=True)
+class TableSerializer(serializer.ModelSerializer):
+    
 
 
     class Meta:
-        model = MenuItem
-        fields = ['id', name','description','price', 'image' 'is_available']   # Only essential details
+        model = Table
+        fields = ['id','table_number', 'capacity' 'is_available', 'location']   # Only essential details
          
