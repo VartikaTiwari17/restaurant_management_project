@@ -3,24 +3,23 @@ from django.db import models
 
 
 class MenuItem(models.Model):
+    CATEGORY_CHOICES = [
+        ('APPETIZER', 'Appetizer'),
+        ('MAIN_COURSE', 'Main_Course'),
+        ('DESSERT', 'Dessert'),
+        ('BEVERAGE', 'Beverage'),
+    ]
+
+
     name = models.CharField(max_length=100)
-    capacity = models.PositiveIntegerField()
-    is_available = models.BooleanField(default=True)
+    Description  = models.TextField()
+    price  = models. DecimalField(max_digits=6, decimal_places=2)
+    image = models.ImageField(upload_to='menu_images/', blank=True, null=True)
+    category = models.CharField(max_length=20, choices=CATEGORY_CHOICES)
     )
 
 
      def __str__(self):
-        return f"Table {self.table_number}  (Capacity: {self.capacity})"
+        return self.name
 
-        @classmethod
-        def get_items_by_cuisine(cls, cuisine_type):
-            """
-            Return a QuerySet of menu items filltered by the given cuisine type.
-
-            Args:
-            cuisine_type (str): The cuisine tpye to filter by. 
-
-            Returns:
-              QuerySet: A filtered QuerySet of MenuItem objects.
-              """
-              return cls.objects.filter(cuisine__iexact=cuisine_type)
+    
