@@ -1,13 +1,13 @@
 from django.db import models
 
 
-class Restaurant(models.Model):
-    name = models.CharField(max_length=100)
-    description = models.TextField(blank=Trye, null=True)
-    capacity = models.IntegerField(default=0, blank=True, null=True)
+class Table(models.Model):
+    table_number = models.IntegerField(unique=True)
+    capacity = models.IntegerField()
+    is_available = models.BooleanField(default=True)
      
 
 
 
      def __str__(self):
-        return self.name
+        return f"Table {self.table_number}   (Capacity:  {self.capacity})"
