@@ -16,7 +16,7 @@ class MenuItem(models.Model):
 
 
      def __str__(self):
-        return self.name
+        retur self.name
 
 
 class UserReviewa(models.Model):
