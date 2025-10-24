@@ -3,7 +3,7 @@ from django.utils import timezone
 
 
 
-class Cuisine(models.Model):
+class Ingredient(models.Model):
     name = models.CharField(max_length=100, unique=True)
 
 
