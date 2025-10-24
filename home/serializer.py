@@ -9,6 +9,6 @@ class TableSerializer(serializer.ModelSerializer):
 
 
     class Meta:
-        model = Table
-        fields = ['id','table_number', 'capacity' 'is_available', 'location']   # Only essential details
+        model = Cuisine
+        fields = ['id','name']   # Only include the fields ypu want in JSON
          
