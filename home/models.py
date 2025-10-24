@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 
 
@@ -15,7 +16,11 @@ class MenuItem(models.Model):
     description = models.TextField(blank=True, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
 
+class DailySpecial(models.Model):
+    menu_item = models.ForeignKey(MenuItem, on_delte=models.CASCADE)
+    date = models.DateField()
 
+    
 
     cuisine = models.ForeiKey(
         Cuisine,
