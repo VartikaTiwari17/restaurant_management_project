@@ -26,7 +26,8 @@ class UserReviewa(models.Model):
     comment = models.TextField(blank=True, null=True)
     crated_at = models.DateTimeField(auto_now_add=True)
 
-
+  class Meta:
+    unique_together = ('menu_item', 'date')
 
     def __str__(self):
         return f'{self.user.username} - {self.menu_item.name}  ({self.rating}/5)'
