@@ -21,3 +21,8 @@ def get_order_status(request, order_id):
                  {"error": f"Order with ID {order_id} not found."},
                  status=status.HTTP_404_NOT_FOUND
                  )
+
+                 class TableListView(generics.ListAPIView):
+
+                    queryset = Table.objects.all()
+                    serializer_class = TableSerializer
