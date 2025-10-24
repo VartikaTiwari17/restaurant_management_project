@@ -8,6 +8,9 @@ class MenuItem(models.Model):
 
 
     is_featured = models.DecimalField(max_digits=6, decimal_places=2)
+
+
+    objects = MenuItemManager()
      
 
 
