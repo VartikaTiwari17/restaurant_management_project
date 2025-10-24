@@ -1,13 +1,12 @@
 from django.db import models 
 
 
-class OrderStatus(models.Model):
-       name = models.CharField(max_length=50, unique=True)
-       user = models. DateTimeField(auto_now_add=True)
-
-
-
-customer_notes = models.TextField(blank=True, null=True)
+class Discount(models.Model):
+       code = models.CharField(max_length=50, unique=True)
+       percentage = models. DecimalField(max_digits=5, decimal_places=2)
+       start_date = models.DateFIeld()
+       end_date = models.DateField()
+       is_active = models.BooleanField(default=True)
 
        def __str__(self):
-          return f"Order  #{self.id} - {self.customer.username}"
+          return f"{self.code} - ({self.percentage}%)"
