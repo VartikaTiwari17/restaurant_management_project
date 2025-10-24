@@ -1,12 +1,9 @@
 from django.contrib import admin
-from .models import Table  
+from .models import Restaurant
 
 
- Register the Table model
-
-
-@admin.register(Table)
-class TableAdmin(admin.ModelAdmin):
-    list_display = ('table_number', 'capacity','is_available, 'location')
-    list_filter = ('is_available', 'location')
-    search_fields = ('table_number', 'location')
+ @admin.register(Table)
+class Restaurant Admin(admin.ModelAdmin):
+    list_display = ('name''address', 'phone_number','email', 'is_acitve')
+    list_filter = ('is_active')
+    search_fields = ('name', 'address')
