@@ -1,4 +1,6 @@
-from  .models import Table
+from  string
+import random
+from .models import Reservation
 
 
 
