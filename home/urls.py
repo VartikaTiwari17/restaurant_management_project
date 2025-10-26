@@ -1,10 +1,6 @@
-from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-from .views import IngredientViewSet
-
-router = DefaultRouter()
-router.register(r'ingredients', IngredientViewSet)
+from django.urls import path
+from .views import FeaturedMenuItemsAPIView
 
 urlpatterns = [
-    path('api/', include(router.urls)),
+    path('api/menu/featured/', FeaturedMenuItemsAPIView.as_view(), name='featured-menu-items'),
 ]
