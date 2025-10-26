@@ -1,9 +1,5 @@
 from django.contrib import admin
-from .models import Restaurant
+from .models import DailyOperatingHours  # Import your model
 
-
- @admin.register(Table)
-class Restaurant Admin(admin.ModelAdmin):
-    list_display = ('name''address', 'phone_number','email', 'is_acitve')
-    list_filter = ('is_active')
-    search_fields = ('name', 'address')
+# Register the model to make it editable in Django admin
+admin.site.register(DailyOperatingHours)
