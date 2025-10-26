@@ -1,20 +1,10 @@
 from django.db import models
+from django.conf import settings
 
-
-
-class MenuCategory (model.Models):
-    name = models.CharField(max_length=100, unique=True)
-
-
-
-class Restaurant(models.Model):
-    name = models.CharField(max_length=255)
-    address = models.CharField(max_length=255)
-    phone_numbar = models. CharField(max_length=20)
-    operating_days = models.CharField(
-        max_length=100, 
-        help_text="Enter days like: Mon, Tue, Wed, Thu, Fri,Sat,Sun "
-        )
+class CustomerProfile(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    phone_number = models.CharField(max_length=20)
+    delivery_address = models.TextField()
 
     def __str__(self):
-          return self.name
+        return f"{self.user.username} Profile"
