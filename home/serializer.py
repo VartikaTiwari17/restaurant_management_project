@@ -1,14 +1,7 @@
-from rest_framework import Serializers
-from .models import Table
+from rest_framework import serializers
+from .models import Ingredient
 
-
-
-
-class TableSerializer(serializer.ModelSerializer):
-    
-
-
+class IngredientSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Cuisine
-        fields = ['id','name']   # Only include the fields ypu want in JSON
-         
+        model = Ingredient
+        fields = ['id', 'name', 'unit_of_measure']

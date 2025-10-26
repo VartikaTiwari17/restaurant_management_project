@@ -1,8 +1,10 @@
-from django.urls import path
-from .view import daily_restaurant_info
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import IngredientViewSet
 
+router = DefaultRouter()
+router.register(r'ingredients', IngredientViewSet)
 
 urlpatterns = [
-    path('api/restaurant/', get_restaurant_info,  name='get_restaurant_view),
-
+    path('api/', include(router.urls)),
 ]
