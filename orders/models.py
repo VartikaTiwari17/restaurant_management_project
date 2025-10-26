@@ -1,29 +1,12 @@
-from django.db import  models
-from djngo.contrib.auth.models import User
-
-
+from django.db import models
 
 class Order(models.Model):
-    STATUS_CHOICES = [
-        ('PENDING', 'Pending'),
-        ('PROCESSING', 'Processing'),
-        ('DELIVERIED', 'Delivered'),
-         ]
-
-
+    customer = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    total_amount = models.DecimalField(max_digits=10, decimal_places=2)
+    order_status = models.CharField(max_length=50)
     
-    order_id = models ForeignKey(User, on_delete=models.CASCADE)
+    # New field to automatically record creation timestamp
     created_at = models.DateTimeField(auto_now_add=True)
-    total_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='PENDING')
-
 
     def __str__(self):
-        return f"Order  #{self.id} by {self.status}"
-
-
-
-
-
-    
-        
+        return f"Order {self.id} by {self.customer.username}"
