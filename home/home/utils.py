@@ -1,18 +1,23 @@
-# Utility functions for the home app
+from datetime import datetime
+from .models import DailyOperatingHours
 
-def estimate_table_turnover_time(table_capacity: int) -> int:
+def is_restaurant_open() -> bool:
     """
-    Estimate the dining duration for a table based on its seating capacity.
-
-    Args:
-        table_capacity (int): Number of seats at the table.
-
+    Determines if the restaurant is currently open based on DailyOperatingHours.
+    
     Returns:
-        int: Estimated dining duration in minutes.
+        bool: True if open, False if closed.
     """
-    if table_capacity <= 2:
-        return 60  # small table
-    elif table_capacity <= 4:
-        return 90  # medium table
-    else:
-        return 120  # large table
+    now = datetime.now()
+    current_day = now.strftime('%A')  # e.g., 'Monday'
+    current_time = now.time()
+
+    try:
+        hours = DailyOperatingHours.objects.get(day_of_week=current_day)
+        if hours.opening_time <= current_time <= hours.closing_time:
+            return True
+        else:
+            return False
+    except DailyOperatingHours.DoesNotExist:
+        # No operating hours defined for today
+        return False
