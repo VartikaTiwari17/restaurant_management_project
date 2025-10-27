@@ -1,9 +1,26 @@
 from django.db import models
 
-class HolidayClosure(models.Model):
-    date = models.DateField()
-    reason = models.CharField(max_length=255)
-    is_full_day_closure = models.BooleanField(default=True)
+class FeedbackCategory(models.Model):
+    name = models.CharField(max_length=100, unique=True)
 
     def __str__(self):
-        return f"{self.reason} on {self.date}"
+        return self.name
+
+
+class Feedback(models.Model):
+    # existing fields (example — replace or keep as your original ones)
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    message = models.TextField()
+
+    # new category field
+    category = models.ForeignKey(
+        FeedbackCategory,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='feedbacks'
+    )
+
+    def __str__(self):
+        return f"{self.name} - {self.category.name if self.category else 'No Category'}"
