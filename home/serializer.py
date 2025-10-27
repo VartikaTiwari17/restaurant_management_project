@@ -1,8 +1,10 @@
 # home/serializer.py
 from rest_framework import serializers
-from .models import HolidayHours
+from .models import MenuCategory
 
-class HolidayHoursSerializer(serializers.ModelSerializer):
+class MenuCategorySerializer(serializers.ModelSerializer):
+    item_count = serializers.IntegerField(read_only=True)
+
     class Meta:
-        model = HolidayHours
-        fields = '__all__'
+        model = MenuCategory
+        fields = ['id', 'name', 'item_count']

@@ -1,6 +1,7 @@
-from .views import HolidayHoursListView
+# home/urls.py
+from .views import MenuCategoryWithCountView
 
 urlpatterns = [
-    # ... other paths
-    path('api/holiday-hours/', HolidayHoursListView.as_view(), name='holiday-hours-list'),
+    # ... existing endpoints
+    path('api/menu/categories-with-count/', MenuCategoryWithCountView.as_view(), name='menu-categories-with-count'),
 ]

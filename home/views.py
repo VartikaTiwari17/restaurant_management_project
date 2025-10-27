@@ -1,15 +1,12 @@
 # home/views.py
 from rest_framework import generics
-from .models import HolidayHours
-from .serializer import HolidayHoursSerializer
+from django.db.models import Count
+from .models import MenuCategory
+from .serializer import MenuCategorySerializer
 
-class HolidayHoursListView(generics.ListAPIView):
-    """API endpoint to list all holiday hours, with optional date filtering."""
-    serializer_class = HolidayHoursSerializer
+class MenuCategoryWithCountView(generics.ListAPIView):
+    """List all menu categories with the total number of items in each."""
+    serializer_class = MenuCategorySerializer
 
     def get_queryset(self):
-        queryset = HolidayHours.objects.all()
-        date = self.request.query_params.get('date', None)
-        if date:
-            queryset = queryset.filter(date=date)
-        return queryset
+        return MenuCategory.objects.annotate(item_count=Count('menuitem'))
