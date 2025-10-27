@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Feedback, FeedbackCategory
+from .models import MenuItem, Allergen
 
-admin.site.register(Feedback)
-admin.site.register(FeedbackCategory)
+admin.site.register(Allergen)
+admin.site.register(MenuItem)
