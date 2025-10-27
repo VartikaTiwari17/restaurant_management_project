@@ -1,15 +1,9 @@
-class Restaurant(models.Model):
-    name = models.CharField(max_length=100)
-    street_address = models.CharField(max_length=255)
-    city = models.CharField(max_length=100)
-    state = models.CharField(max_length=100)
-    zip_code = models.CharField(max_length=10)
+from django.db import models
 
-    def get_full_address(self):
-        """
-        Returns the restaurant's complete address as a single formatted string.
-        """
-        return f"{self.street_address}, {self.city}, {self.state} {self.zip_code}"
+class HolidayClosure(models.Model):
+    date = models.DateField()
+    reason = models.CharField(max_length=255)
+    is_full_day_closure = models.BooleanField(default=True)
 
     def __str__(self):
-        return self.name
+        return f"{self.reason} on {self.date}"
