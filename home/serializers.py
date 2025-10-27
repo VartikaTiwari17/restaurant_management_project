@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from .models import MenuItem
+from .models import StaffShift
 
-class MenuItemSerializer(serializers.ModelSerializer):
+class StaffShiftSerializer(serializers.ModelSerializer):
     class Meta:
-        model = MenuItem
-        fields = ['id', 'name', 'description', 'price', 'is_featured']  # include relevant fields
+        model = StaffShift
+        fields = '__all__'

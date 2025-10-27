@@ -1,8 +1,6 @@
-# home/urls.py
 from django.urls import path
-from .views import UpdateReservationStatusView
+from .views import StaffShiftListView
 
 urlpatterns = [
-    # ... existing routes
-    path('api/reservations/<int:pk>/update-status/', UpdateReservationStatusView.as_view(), name='update-reservation-status'),
+    path('api/shifts/', StaffShiftListView.as_view(), name='staff-shift-list'),
 ]
