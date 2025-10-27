@@ -1,18 +1,9 @@
 from django.db import models
 
-class Staff(models.Model):
-    ROLE_CHOICES = [
-        ('Chef', 'Chef'),
-        ('Waiter', 'Waiter'),
-        ('Manager', 'Manager'),
-        ('Cleaner', 'Cleaner'),
-        ('Cashier', 'Cashier'),
-    ]
-
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
-    role = models.CharField(max_length=20, choices=ROLE_CHOICES)
-    contact_email = models.EmailField(unique=True)
+class Table(models.Model):
+    table_number = models.CharField(max_length=20, unique=True)  # Unique table identifier
+    capacity = models.PositiveIntegerField()                      # Max guests
+    is_available = models.BooleanField(default=True)              # Availability status
 
     def __str__(self):
-        return f"{self.first_name} {self.last_name} ({self.role})"
+        return f"{self.table_number} (Seats: {self.capacity})"

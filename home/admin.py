@@ -1,8 +1,8 @@
 from django.contrib import admin
-from .models import Staff
+from .models import Table
 
-@admin.register(Staff)
-class StaffAdmin(admin.ModelAdmin):
-    list_display = ('first_name', 'last_name', 'role', 'contact_email')
-    search_fields = ('first_name', 'last_name', 'role')
-    list_filter = ('role',)
+@admin.register(Table)
+class TableAdmin(admin.ModelAdmin):
+    list_display = ('table_number', 'capacity', 'is_available')
+    list_filter = ('is_available', 'capacity')
+    search_fields = ('table_number',)
