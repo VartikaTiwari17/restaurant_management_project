@@ -1,8 +1,8 @@
 from django.contrib import admin
-from .models import DailySpecial
+from .models import Staff
 
-@admin.register(DailySpecial)
-class DailySpecialAdmin(admin.ModelAdmin):
-    list_display = ('name', 'price', 'is_available', 'date')
-    list_filter = ('is_available', 'date')
-    search_fields = ('name', 'description')
+@admin.register(Staff)
+class StaffAdmin(admin.ModelAdmin):
+    list_display = ('first_name', 'last_name', 'role', 'contact_email')
+    search_fields = ('first_name', 'last_name', 'role')
+    list_filter = ('role',)

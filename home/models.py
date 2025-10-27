@@ -1,10 +1,18 @@
 from django.db import models
 
-class MenuItem(models.Model):
-    name = models.CharField(max_length=100)
-    price = models.DecimalField(max_digits=6, decimal_places=2)
-    is_available = models.BooleanField(default=True)
-    is_vegetarian = models.BooleanField(default=False)  # 👈 New field
+class Staff(models.Model):
+    ROLE_CHOICES = [
+        ('Chef', 'Chef'),
+        ('Waiter', 'Waiter'),
+        ('Manager', 'Manager'),
+        ('Cleaner', 'Cleaner'),
+        ('Cashier', 'Cashier'),
+    ]
+
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES)
+    contact_email = models.EmailField(unique=True)
 
     def __str__(self):
-        return self.name
+        return f"{self.first_name} {self.last_name} ({self.role})"
