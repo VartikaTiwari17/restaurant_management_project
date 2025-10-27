@@ -1,14 +1,18 @@
-def calculate_estimated_prep_time(order_items):
-    """
-    Calculate total estimated preparation time for a list of order items.
+from decimal import Decimal, ROUND_HALF_UP
 
-    Args:
-        order_items (list of dict): Each dict contains 'menu_item_id', 'quantity', 'prep_time_minutes'
+def calculate_sales_tax(amount: Decimal, tax_rate: Decimal) -> Decimal:
+    """
+    Calculate and return the sales tax amount.
+
+    Parameters:
+        amount (Decimal): Subtotal before tax.
+        tax_rate (Decimal): Tax rate as a decimal (e.g., 0.08 for 8%).
 
     Returns:
-        int: Total estimated prep time in minutes
+        Decimal: The calculated sales tax.
     """
-    total_time = 0
-    for item in order_items:
-        total_time += item.get('prep_time_minutes', 0) * item.get('quantity', 1)
-    return total_time
+    if not isinstance(amount, Decimal) or not isinstance(tax_rate, Decimal):
+        raise TypeError("Both amount and tax_rate must be of type Decimal.")
+
+    tax = (amount * tax_rate).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
+    return tax
