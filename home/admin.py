@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import MenuItem, Allergen
+from .models import RestaurantStaff, StaffShift
 
-admin.site.register(Allergen)
-admin.site.register(MenuItem)
+admin.site.register(RestaurantStaff)
+admin.site.register(StaffShift)

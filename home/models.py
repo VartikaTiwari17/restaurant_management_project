@@ -1,19 +1,21 @@
 from django.db import models
+from django.utils import timezone
 
-class Allergen(models.Model):
-    name = models.CharField(max_length=100, unique=True)
-
-    def __str__(self):
-        return self.name
-
-
-# Make sure your MenuItem model looks something like this:
-class MenuItem(models.Model):
+# Assuming you already have RestaurantStaff model somewhere above
+class RestaurantStaff(models.Model):
     name = models.CharField(max_length=100)
-    price = models.DecimalField(max_digits=6, decimal_places=2)
-    is_active = models.BooleanField(default=True)
-    # add this line below:
-    allergens = models.ManyToManyField(Allergen, blank=True)
+    role = models.CharField(max_length=50)
+    email = models.EmailField(unique=True)
 
     def __str__(self):
-        return self.name
+        return f"{self.name} ({self.role})"
+
+
+class StaffShift(models.Model):
+    staff_member = models.ForeignKey(RestaurantStaff, on_delete=models.CASCADE, related_name="shifts")
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField()
+    date = models.DateField(default=timezone.now)
+
+    def __str__(self):
+        return f"{self.staff_member.name} - {self.date} ({self.start_time} to {self.end_time})"
