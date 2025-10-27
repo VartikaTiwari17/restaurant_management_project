@@ -1,6 +1,6 @@
 from django.urls import path
-from .view import get_order_status
+from .views import UpdateOrderItemQuantityView
 
 urlpatterns = [
-    path ('api/<order>/history/' , get_order_status, name="get-order-status"),
+    path('order-items/<int:pk>/update-quantity/', UpdateOrderItemQuantityView.as_view(), name='update-order-item-quantity'),
 ]

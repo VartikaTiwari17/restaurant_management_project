@@ -1,28 +1,33 @@
-from reat_framework. views import api_view
-from rest_framework. response import Response
 from rest_framework import status
-from .models import Order
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from .models import OrderItem
 
+class UpdateOrderItemQuantityView(APIView):
+    def patch(self, request, pk):
+        try:
+            order_item = OrderItem.objects.get(pk=pk)
+        except OrderItem.DoesNotExist:
+            return Response({"error": "Order item not found."}, status=status.HTTP_404_NOT_FOUND)
 
-@api_view(['GET'])
-def get_order_status(request, order_id):
-     """
-     Retrieve the current status of an order by its ID.
-     """
+        new_quantity = request.data.get("quantity")
 
-     try:
-        order = Order.objects.get(id=order_id)
-        return Response({
-            "order_id": order.id,
-            "status": getattr(order, 'status', 'pending')
-        }, status=status.HTTP_200_OK)
-        except Order.DoesNotExist:
-           return Response(
-                 {"error": f"Order with ID {order_id} not found."},
-                 status=status.HTTP_404_NOT_FOUND
-                 )
+        # Validation
+        if new_quantity is None:
+            return Response({"error": "Quantity is required."}, status=status.HTTP_400_BAD_REQUEST)
 
-                 class TableListView(generics.ListAPIView):
+        try:
+            new_quantity = int(new_quantity)
+        except ValueError:
+            return Response({"error": "Quantity must be an integer."}, status=status.HTTP_400_BAD_REQUEST)
 
-                    queryset = Table.objects.all()
-                    serializer_class = TableSerializer
+        if new_quantity < 0:
+            return Response({"error": "Quantity must be positive."}, status=status.HTTP_400_BAD_REQUEST)
+
+        if new_quantity == 0:
+            order_item.delete()
+            return Response({"message": "Item removed from cart."}, status=status.HTTP_204_NO_CONTENT)
+
+        order_item.quantity = new_quantity
+        order_item.save()
+        return Response({"message": "Quantity updated successfully."}, status=status.HTTP_200_OK)
