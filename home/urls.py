@@ -1,6 +1,7 @@
+# home/urls.py
 from django.urls import path
-from .views import FeaturedMenuItemsAPIView
+from .views import ActiveMenuItemsListView
 
 urlpatterns = [
-    path('api/menu/featured/', FeaturedMenuItemsAPIView.as_view(), name='featured-menu-items'),
+    path('api/menu/active/', ActiveMenuItemsListView.as_view(), name='active-menu-items'),
 ]
