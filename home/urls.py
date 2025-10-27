@@ -1,7 +1,6 @@
-# home/urls.py
-from django.urls import path
-from .views import ActiveMenuItemsListView
+from .views import HolidayHoursListView
 
 urlpatterns = [
-    path('api/menu/active/', ActiveMenuItemsListView.as_view(), name='active-menu-items'),
+    # ... other paths
+    path('api/holiday-hours/', HolidayHoursListView.as_view(), name='holiday-hours-list'),
 ]

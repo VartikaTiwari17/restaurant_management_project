@@ -1,7 +1,8 @@
+# home/serializer.py
 from rest_framework import serializers
-from .models import MenuItem
+from .models import HolidayHours
 
-class MenuItemSerializer(serializers.ModelSerializer):
+class HolidayHoursSerializer(serializers.ModelSerializer):
     class Meta:
-        model = MenuItem
-        fields = ['id', 'name', 'price', 'is_available', 'is_vegetarian']  # 👈 Include new field
+        model = HolidayHours
+        fields = '__all__'
