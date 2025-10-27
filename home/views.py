@@ -1,7 +1,8 @@
 from rest_framework import generics
-from .models import StaffShift
-from .serializers import StaffShiftSerializer
+from django.db.models import Count
+from .models import MenuCategory
+from .serializers import MenuCategorySerializer
 
-class StaffShiftListView(generics.ListAPIView):
-    queryset = StaffShift.objects.all()
-    serializer_class = StaffShiftSerializer
+class MenuCategoryListView(generics.ListAPIView):
+    queryset = MenuCategory.objects.annotate(item_count=Count('menuitem'))
+    serializer_class = MenuCategorySerializer

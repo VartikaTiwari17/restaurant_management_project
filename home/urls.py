@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import StaffShiftListView
+from .views import MenuCategoryListView
 
 urlpatterns = [
-    path('api/shifts/', StaffShiftListView.as_view(), name='staff-shift-list'),
+    path('api/menu/categories/', MenuCategoryListView.as_view(), name='menu-category-list'),
 ]

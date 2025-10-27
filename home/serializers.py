@@ -1,7 +1,10 @@
 from rest_framework import serializers
-from .models import StaffShift
+from django.db.models import Count
+from .models import MenuCategory
 
-class StaffShiftSerializer(serializers.ModelSerializer):
+class MenuCategorySerializer(serializers.ModelSerializer):
+    item_count = serializers.IntegerField(read_only=True)
+
     class Meta:
-        model = StaffShift
-        fields = '__all__'
+        model = MenuCategory
+        fields = ['id', 'name', 'item_count']
