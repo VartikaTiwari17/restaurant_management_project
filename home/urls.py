@@ -1,7 +1,8 @@
 # home/urls.py
-from .views import MenuCategoryWithCountView
+from django.urls import path
+from .views import UpdateReservationStatusView
 
 urlpatterns = [
-    # ... existing endpoints
-    path('api/menu/categories-with-count/', MenuCategoryWithCountView.as_view(), name='menu-categories-with-count'),
+    # ... existing routes
+    path('api/reservations/<int:pk>/update-status/', UpdateReservationStatusView.as_view(), name='update-reservation-status'),
 ]

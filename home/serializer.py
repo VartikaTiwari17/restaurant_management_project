@@ -1,10 +1,8 @@
 # home/serializer.py
 from rest_framework import serializers
-from .models import MenuCategory
+from .models import Reservation
 
-class MenuCategorySerializer(serializers.ModelSerializer):
-    item_count = serializers.IntegerField(read_only=True)
-
+class ReservationStatusSerializer(serializers.ModelSerializer):
     class Meta:
-        model = MenuCategory
-        fields = ['id', 'name', 'item_count']
+        model = Reservation
+        fields = ['status']
