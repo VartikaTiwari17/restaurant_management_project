@@ -1,5 +1,8 @@
 from django.contrib import admin
-from .models import DailyOperatingHours  # Import your model
+from .models import DailySpecial
 
-# Register the model to make it editable in Django admin
-admin.site.register(DailyOperatingHours)
+@admin.register(DailySpecial)
+class DailySpecialAdmin(admin.ModelAdmin):
+    list_display = ('name', 'price', 'is_available', 'date')
+    list_filter = ('is_available', 'date')
+    search_fields = ('name', 'description')
