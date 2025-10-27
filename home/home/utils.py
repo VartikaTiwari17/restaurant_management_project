@@ -1,23 +1,14 @@
-from datetime import datetime
-from .models import DailyOperatingHours
+# home/utils.py
+from decimal import Decimal, ROUND_HALF_UP
 
-def is_restaurant_open() -> bool:
+def format_price(value, currency_symbol='$'):
     """
-    Determines if the restaurant is currently open based on DailyOperatingHours.
+    Format a numeric price value into a consistent currency format.
+    Example: 15.5 -> '$15.50'
+    """
+    if not isinstance(value, Decimal):
+        value = Decimal(str(value))
     
-    Returns:
-        bool: True if open, False if closed.
-    """
-    now = datetime.now()
-    current_day = now.strftime('%A')  # e.g., 'Monday'
-    current_time = now.time()
-
-    try:
-        hours = DailyOperatingHours.objects.get(day_of_week=current_day)
-        if hours.opening_time <= current_time <= hours.closing_time:
-            return True
-        else:
-            return False
-    except DailyOperatingHours.DoesNotExist:
-        # No operating hours defined for today
-        return False
+    # Round to 2 decimal places using standard rounding
+    formatted_value = value.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+    return f"{currency_symbol}{formatted_value:.2f}"
