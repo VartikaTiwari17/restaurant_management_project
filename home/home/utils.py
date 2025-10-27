@@ -1,14 +1,20 @@
 # home/utils.py
-from decimal import Decimal, ROUND_HALF_UP
+from datetime import datetime
+from django.utils import timezone
+from .models import DailyOperatingHours  # make sure this model exists
 
-def format_price(value, currency_symbol='$'):
-    """
-    Format a numeric price value into a consistent currency format.
-    Example: 15.5 -> '$15.50'
-    """
-    if not isinstance(value, Decimal):
-        value = Decimal(str(value))
-    
-    # Round to 2 decimal places using standard rounding
-    formatted_value = value.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
-    return f"{currency_symbol}{formatted_value:.2f}"
+def is_restaurant_open():
+    """Return True if the restaurant is currently open, else False."""
+    now = timezone.localtime()
+    current_day = now.strftime('%A')  # e.g., 'Monday'
+    current_time = now.time()
+
+    try:
+        today_hours = DailyOperatingHours.objects.get(day=current_day)
+    except DailyOperatingHours.DoesNotExist:
+        return False  # No data for today means closed
+
+    # Check if within today's operating hours
+    if today_hours.opening_time <= current_time <= today_hours.closing_time:
+        return True
+    return False
