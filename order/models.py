@@ -1,12 +1,7 @@
-from django.db import models 
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
-
-class Discount(models.Model):
-       code = models.CharField(max_length=50, unique=True)
-       percentage = models. DecimalField(max_digits=5, decimal_places=2)
-       start_date = models.DateFIeld()
-       end_date = models.DateField()
-       is_active = models.BooleanField(default=True)
-
-       def __str__(self):
-          return f"Table{self.code} - ({self.percentage}%)"
+@receiver(post_save, sender='orders.Reservation')
+def log_new_reservation(sender, instance, created, **kwargs):
+    if created:
+        print(f"New reservation created: ID #{instance.id} for {instance.customer_name} at {instance.time}")
