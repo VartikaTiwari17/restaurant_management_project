@@ -1,16 +1,12 @@
-def calculate_tip_amount(order_total, tip_percentage):
+from datetime import datetime
+
+def format_datetime(dt):
     """
-    Calculates the tip amount for a given order total and tip percentage.
-
-    Parameters:
-        order_total (float or Decimal): The total bill amount before tip.
-        tip_percentage (int or float): The tip percentage (e.g., 10 for 10%).
-
-    Returns:
-        float: The calculated tip amount rounded to two decimal places.
+    Formats a datetime object into a readable string.
+    Example: 'January 1, 2023 at 10:30 AM'
+    Returns an empty string if dt is None.
     """
-    if order_total is None or tip_percentage is None:
-        return 0.0
-
-    tip_amount = order_total * (tip_percentage / 100)
-    return round(tip_amount, 2)
+    if dt is None:
+        return ""
+    
+    return dt.strftime("%B %d, %Y at %I:%M %p")
