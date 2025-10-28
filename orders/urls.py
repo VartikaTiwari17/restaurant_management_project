@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import UpdateOrderItemQuantityView
+from .views import ActivePaymentMethodsListView
 
 urlpatterns = [
-    path('order-items/<int:pk>/update-quantity/', UpdateOrderItemQuantityView.as_view(), name='update-order-item-quantity'),
+    path('api/payment-methods/', ActivePaymentMethodsListView.as_view(), name='payment-methods-list'),
 ]
