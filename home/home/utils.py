@@ -1,28 +1,13 @@
-import math
+from datetime import datetime
 
-def calculate_distance(lat1, lon1, lat2, lon2):
+def calculate_duration_in_minutes(start_time: datetime, end_time: datetime) -> int:
     """
-    Calculate the distance between two latitude/longitude points using the Haversine formula.
-    Returns the distance in kilometers.
+    Calculate the total duration between two datetime objects in minutes.
+    Returns an integer.
     """
-    # Radius of Earth in kilometers
-    R = 6371.0
+    if not isinstance(start_time, datetime) or not isinstance(end_time, datetime):
+        raise ValueError("Both inputs must be datetime objects.")
 
-    # Convert coordinates from degrees to radians
-    lat1_rad = math.radians(lat1)
-    lon1_rad = math.radians(lon1)
-    lat2_rad = math.radians(lat2)
-    lon2_rad = math.radians(lon2)
-
-    # Differences
-    dlon = lon2_rad - lon1_rad
-    dlat = lat2_rad - lat1_rad
-
-    # Haversine formula
-    a = math.sin(dlat / 2)**2 + math.cos(lat1_rad) * math.cos(lat2_rad) * math.sin(dlon / 2)**2
-    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
-
-    # Distance in km
-    distance = R * c
-
-    return round(distance, 2)
+    duration = end_time - start_time
+    total_minutes = int(duration.total_seconds() // 60)
+    return total_minutes
