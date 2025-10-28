@@ -1,13 +1,18 @@
-from datetime import datetime
+import re
 
-def calculate_duration_in_minutes(start_time: datetime, end_time: datetime) -> int:
+def sanitize_text(text: str) -> str:
     """
-    Calculate the total duration between two datetime objects in minutes.
-    Returns an integer.
+    Cleans up the given text by:
+    - Stripping leading and trailing whitespace
+    - Replacing multiple spaces with a single space
     """
-    if not isinstance(start_time, datetime) or not isinstance(end_time, datetime):
-        raise ValueError("Both inputs must be datetime objects.")
-
-    duration = end_time - start_time
-    total_minutes = int(duration.total_seconds() // 60)
-    return total_minutes
+    if not isinstance(text, str):
+        return text  # In case a non-string is passed accidentally
+    
+    # Remove leading/trailing whitespace
+    cleaned_text = text.strip()
+    
+    # Replace multiple spaces with a single space
+    cleaned_text = re.sub(r'\s+', ' ', cleaned_text)
+    
+    return cleaned_text
