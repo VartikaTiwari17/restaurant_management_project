@@ -1,10 +1,11 @@
 from django.db import models
-from home.models import MenuItem
 
-class OrderItem(models.Model):
-    menu_item = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
-    quantity = models.PositiveIntegerField(default=1)
-    order = models.ForeignKey('Order', on_delete=models.CASCADE, related_name='items')
+class PaymentMethod(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    description = models.TextField(blank=True)
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.menu_item.name} x {self.quantity}"
+        return self.name
