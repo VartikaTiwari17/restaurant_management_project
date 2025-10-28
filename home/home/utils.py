@@ -1,12 +1,28 @@
-from datetime import date
-from home.models import HolidayClosure
+import math
 
-def is_restaurant_closed_on_holiday(date_to_check: date) -> bool:
+def calculate_distance(lat1, lon1, lat2, lon2):
     """
-    Returns True if the restaurant is closed on the given date
-    due to a full-day holiday closure, otherwise False.
+    Calculate the distance between two latitude/longitude points using the Haversine formula.
+    Returns the distance in kilometers.
     """
-    return HolidayClosure.objects.filter(
-        date=date_to_check,
-        is_full_day_closure=True
-    ).exists()
+    # Radius of Earth in kilometers
+    R = 6371.0
+
+    # Convert coordinates from degrees to radians
+    lat1_rad = math.radians(lat1)
+    lon1_rad = math.radians(lon1)
+    lat2_rad = math.radians(lat2)
+    lon2_rad = math.radians(lon2)
+
+    # Differences
+    dlon = lon2_rad - lon1_rad
+    dlat = lat2_rad - lat1_rad
+
+    # Haversine formula
+    a = math.sin(dlat / 2)**2 + math.cos(lat1_rad) * math.cos(lat2_rad) * math.sin(dlon / 2)**2
+    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+
+    # Distance in km
+    distance = R * c
+
+    return round(distance, 2)
