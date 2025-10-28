@@ -1,21 +1,8 @@
-from django.db.models.signals import pre_save, post_save
+from django.db.models.signals import post_save
 from django.dispatch import receiver
-from .models import MenuItem
+from home.models import MenuCategory
 
-@receiver(pre_save, sender=MenuItem)
-def detect_price_change(sender, instance, **kwargs):
-    """Detect price changes in MenuItem and log them."""
-    if not instance.pk:
-        # New object, skip comparison
-        return
-
-    try:
-        old_instance = MenuItem.objects.get(pk=instance.pk)
-    except MenuItem.DoesNotExist:
-        return
-
-    if old_instance.price != instance.price:
-        print(
-            f"💰 Price change detected for '{instance.name}': "
-            f"{old_instance.price} → {instance.price}"
-        )
+@receiver(post_save, sender=MenuCategory)
+def log_new_menu_category(sender, instance, created, **kwargs):
+    if created:
+        print(f"New Menu Category created: {instance.name}")
