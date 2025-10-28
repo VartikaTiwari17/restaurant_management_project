@@ -1,10 +1,10 @@
-from django.db import models
+class Order(models.Model):
+    # existing fields (like customer, status, total, etc.)
 
-class LoyaltyProgram(models.Model):
-    name = models.CharField(max_length=50, unique=True)
-    points_required = models.IntegerField(unique=True)
-    discount_percentage = models.DecimalField(max_digits=5, decimal_places=2)
-    description = models.TextField()
-
-    def __str__(self):
-        return f"{self.name} ({self.discount_percentage}% discount)"
+    def get_unique_item_names(self):
+        """
+        Returns a list of unique menu item names associated with this order.
+        """
+        # Collect item names from related OrderItems
+        item_names = {item.menu_item.name for item in self.orderitem_set.all()}
+        return list(item_names)
