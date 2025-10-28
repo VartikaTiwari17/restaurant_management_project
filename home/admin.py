@@ -1,15 +1,16 @@
 from django.contrib import admin
-from django.utils.html import format_html
-from .models import MenuItem
+from .models import Order
 
-@admin.register(MenuItem)
-class MenuItemAdmin(admin.ModelAdmin):
-    list_display = ('name', 'price', 'is_active', 'availability_status')
+# Custom admin action
+def mark_orders_processed(modeladmin, request, queryset):
+    updated = queryset.update(status='Processed')
+    modeladmin.message_user(request, f"{updated} orders marked as Processed.")
 
-    def availability_status(self, obj):
-        """Display a green check if active, red cross if not."""
-        if obj.is_active:
-            return format_html('<span style="color: green;">✔️ Available</span>')
-        return format_html('<span style="color: red;">❌ Unavailable</span>')
+mark_orders_processed.short_description = "Mark selected orders as Processed"
 
-    availability_status.short_description = 'Availability'
+# Register the Order model with custom admin
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ('id', 'customer', 'status', 'created_at')
+    list_filter = ('status',)
+    actions = [mark_orders_processed]
