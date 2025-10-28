@@ -1,12 +1,22 @@
-from django.db import models
+class Order(models.Model):
+    STATUS_PENDING = 'PENDING'
+    STATUS_PROCESSED = 'PROCESSED'
+    STATUS_COMPLETED = 'COMPLETED'
 
-class LoyaltyProgram(models.Model):
-    name = models.CharField(max_length=50, unique=True)
-    points_per_dollar_spent = models.DecimalField(max_digits=5, decimal_places=2)
-    description = models.TextField()
-    is_active = models.BooleanField(default=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    STATUS_CHOICES = [
+        (STATUS_PENDING, 'Pending'),
+        (STATUS_PROCESSED, 'Processed'),
+        (STATUS_COMPLETED, 'Completed'),
+    ]
 
-    def __str__(self):
-        return self.name
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default=STATUS_PENDING
+    )
+
+    # 🆕 New method to mark order as completed
+    def mark_as_completed(self):
+        """Mark this order as completed and save the change."""
+        self.status = self.STATUS_COMPLETED
+        self.save()
