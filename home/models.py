@@ -1,7 +1,7 @@
 from django.db import models
 
 class NutritionalInformation(models.Model):
-    menu_item = models.ForeignKey('MenuItem', on_delete=models.CASCADE, related_name='nutrition_info')
+    menu_item = models.ForeignKey('MenuItem', on_delete=models.CASCADE, related_name='nutritional_info')
     calories = models.IntegerField()
     protein_grams = models.DecimalField(max_digits=5, decimal_places=2)
     fat_grams = models.DecimalField(max_digits=5, decimal_places=2)
