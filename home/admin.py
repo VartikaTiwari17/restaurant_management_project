@@ -1,16 +1,7 @@
 from django.contrib import admin
-from .models import Order
+from .models import Coupon
 
-# Custom admin action
-def mark_orders_processed(modeladmin, request, queryset):
-    updated = queryset.update(status='Processed')
-    modeladmin.message_user(request, f"{updated} orders marked as Processed.")
-
-mark_orders_processed.short_description = "Mark selected orders as Processed"
-
-# Register the Order model with custom admin
-@admin.register(Order)
-class OrderAdmin(admin.ModelAdmin):
-    list_display = ('id', 'customer', 'status', 'created_at')
-    list_filter = ('status',)
-    actions = [mark_orders_processed]
+@admin.register(Coupon)
+class CouponAdmin(admin.ModelAdmin):
+    list_display = ('code', 'discount_percentage', 'expiry_date', 'is_active')
+    list_editable = ('is_active',)
