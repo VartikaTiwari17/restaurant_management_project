@@ -1,10 +1,16 @@
 from rest_framework import serializers
-from django.db.models import Count
-from .models import MenuCategory
+from .models import Restaurant
 
-class MenuCategorySerializer(serializers.ModelSerializer):
-    item_count = serializers.IntegerField(read_only=True)
-
+class RestaurantSerializer(serializers.ModelSerializer):
     class Meta:
-        model = MenuCategory
-        fields = ['id', 'name', 'item_count']
+        model = Restaurant
+        fields = [
+            'id',
+            'name',
+            'street_address',
+            'city',
+            'state',
+            'zip_code',
+            'phone_number',
+            'email',
+        ]
