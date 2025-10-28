@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import MenuCategoryListView
+from home.views import RestaurantDetailView
 
 urlpatterns = [
-    path('api/menu/categories/', MenuCategoryListView.as_view(), name='menu-category-list'),
+    path('api/restaurant/<int:pk>/', RestaurantDetailView.as_view(), name='restaurant-detail'),
 ]

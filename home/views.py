@@ -1,8 +1,7 @@
 from rest_framework import generics
-from django.db.models import Count
-from .models import MenuCategory
-from .serializers import MenuCategorySerializer
+from home.models import Restaurant
+from home.serializers import RestaurantSerializer
 
-class MenuCategoryListView(generics.ListAPIView):
-    queryset = MenuCategory.objects.annotate(item_count=Count('menuitem'))
-    serializer_class = MenuCategorySerializer
+class RestaurantDetailView(generics.RetrieveAPIView):
+    queryset = Restaurant.objects.all()
+    serializer_class = RestaurantSerializer
