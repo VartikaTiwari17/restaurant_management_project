@@ -1,22 +1,13 @@
-class Order(models.Model):
-    STATUS_PENDING = 'PENDING'
-    STATUS_PROCESSED = 'PROCESSED'
-    STATUS_COMPLETED = 'COMPLETED'
-
-    STATUS_CHOICES = [
-        (STATUS_PENDING, 'Pending'),
-        (STATUS_PROCESSED, 'Processed'),
-        (STATUS_COMPLETED, 'Completed'),
-    ]
-
-    status = models.CharField(
-        max_length=20,
-        choices=STATUS_CHOICES,
-        default=STATUS_PENDING
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
+    menu_item = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+    special_instructions = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True,
+        help_text="Any special requests for this item (e.g., 'no onions', 'extra sauce')."
     )
 
-    # 🆕 New method to mark order as completed
-    def mark_as_completed(self):
-        """Mark this order as completed and save the change."""
-        self.status = self.STATUS_COMPLETED
-        self.save()
+    def __str__(self):
+        return f"{self.quantity} × {self.menu_item.name}"
