@@ -1,12 +1,9 @@
-class MenuItem(models.Model):
-    name = models.CharField(max_length=100)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+from django.db import models
+
+class Table(models.Model):
+    table_number = models.CharField(max_length=10, unique=True)
     is_available = models.BooleanField(default=True)
-    calories = models.IntegerField(null=True, blank=True)
-    is_gluten_free = models.BooleanField(
-        default=False,
-        help_text='Indicates if the menu item is gluten-free.'
-    )
+    max_seats = models.IntegerField(default=4)  # 🆕 added field
 
     def __str__(self):
-        return self.name
+        return f"Table {self.table_number} (Seats: {self.max_seats})"
