@@ -1,13 +1,21 @@
+from django.db import models
+
+# ✅ Custom Manager
+class VegetarianMenuItemManager(models.Manager):
+    def get_queryset(self):
+        # Returns only vegetarian menu items
+        return super().get_queryset().filter(is_vegetarian=True)
+
+# ✅ MenuItem Model
 class MenuItem(models.Model):
     name = models.CharField(max_length=100)
-    price = models.DecimalField(max_digits=8, decimal_places=2)
-    discount = models.ForeignKey('Discount', on_delete=models.SET_NULL, null=True, blank=True)
-    is_available = models.BooleanField(default=True)
-    calories = models.IntegerField(null=True, blank=True)
-    is_gluten_free = models.BooleanField(default=False)
+    description = models.TextField(blank=True, null=True)
+    is_vegetarian = models.BooleanField(default=False)
 
-    # Attach custom manager
-    objects = MenuItemManager()
+    # Default manager (all items)
+    objects = models.Manager()
+    # Custom manager (vegetarian-only)
+    vegetarian = VegetarianMenuItemManager()
 
     def __str__(self):
         return self.name
