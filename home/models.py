@@ -1,10 +1,11 @@
 from django.db import models
 
 # ✅ Custom Manager
-class VegetarianMenuItemManager(models.Manager):
-    def get_queryset(self):
-        # Returns only vegetarian menu items
-        return super().get_queryset().filter(is_vegetarian=True)
+class MenuItemManager(models.Manager):
+    def vegetarian_items(self):
+        # Return only vegetarian menu items
+        return self.filter(is_vegetarian=True)
+
 
 # ✅ MenuItem Model
 class MenuItem(models.Model):
@@ -12,10 +13,8 @@ class MenuItem(models.Model):
     description = models.TextField(blank=True, null=True)
     is_vegetarian = models.BooleanField(default=False)
 
-    # Default manager (all items)
-    objects = models.Manager()
-    # Custom manager (vegetarian-only)
-    vegetarian = VegetarianMenuItemManager()
+    # Attach the custom manager
+    objects = MenuItemManager()
 
     def __str__(self):
         return self.name
