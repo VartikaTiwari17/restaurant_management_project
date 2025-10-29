@@ -1,34 +1,21 @@
-from datetime import datetime
-from home.models import DailyOperatingHours
+from django.db.models import Avg
+from home.models import MenuItem
 
-def is_valid_reservation_time(reservation_datetime):
+def get_average_prep_time_by_category(category_id):
     """
-    Check if the given reservation time is valid based on the restaurant's
-    operating hours for that specific day.
-
-    Args:
-        reservation_datetime (datetime): The proposed reservation time.
-
-    Returns:
-        bool: True if the time is within open and close hours, False otherwise.
+    Calculate the average preparation time for all menu items
+    in a specific category.
     """
-    if reservation_datetime is None:
-        return False
+    if not category_id:
+        return None
 
-    # Get weekday name, e.g., 'Monday'
-    weekday_name = reservation_datetime.strftime('%A')
+    # Filter menu items by the given category_id
+    menu_items = MenuItem.objects.filter(category_id=category_id)
 
-    try:
-        # Fetch today's operating hours
-        operating_hours = DailyOperatingHours.objects.get(day=weekday_name)
+    if not menu_items.exists():
+        return None  # or return 0, depending on your preference
 
-        if not operating_hours.open_time or not operating_hours.close_time:
-            return False
+    # Calculate average using Django ORM aggregation
+    avg_time = menu_items.aggregate(avg_prep=Avg('prep_time_minutes'))['avg_prep']
 
-        # Extract just the time part
-        proposed_time = reservation_datetime.time()
-
-        return operating_hours.open_time < proposed_time < operating_hours.close_time
-
-    except DailyOperatingHours.DoesNotExist:
-        return False
+    return avg_time if avg_time is not None else 0
