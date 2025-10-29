@@ -1,11 +1,10 @@
 from django.db import models
-from django.contrib.auth.models import User
 
-class Notification(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notifications')
-    message = models.CharField(max_length=255)
-    created_at = models.DateTimeField(auto_now_add=True)
-    is_read = models.BooleanField(default=False)
+class LoyaltyTier(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+    description = models.TextField(blank=True)
+    min_points = models.IntegerField(default=0)
+    discount_percentage = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
 
     def __str__(self):
-        return f"Notification for {self.user.username}: {self.message[:50]}"
+        return f"{self.name} ({self.discount_percentage}% off)"
