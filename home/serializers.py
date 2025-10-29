@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from home.models import Allergen
+from .models import MenuItem
 
-class AllergenSerializer(serializers.ModelSerializer):
+class MenuItemSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Allergen
-        fields = ['id', 'name']
+        model = MenuItem
+        fields = ['id', 'name', 'description', 'price', 'is_spicy']
