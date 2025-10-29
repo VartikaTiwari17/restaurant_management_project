@@ -1,8 +1,8 @@
 from django.contrib import admin
-from account.models import LoyaltyProgram
+from .models import Notification
 
-@admin.register(LoyaltyProgram)
-class LoyaltyProgramAdmin(admin.ModelAdmin):
-    list_display = ['name', 'points_per_dollar_spent', 'is_active', 'created_at']
-    search_fields = ['name']
-    list_filter = ['is_active']
+@admin.register(Notification)
+class NotificationAdmin(admin.ModelAdmin):
+    list_display = ('user', 'message', 'is_read', 'created_at')
+    list_filter = ('is_read', 'created_at')
+    search_fields = ('user__username', 'message')
