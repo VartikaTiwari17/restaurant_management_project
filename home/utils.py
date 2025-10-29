@@ -1,48 +1,56 @@
 touch home/utils.py
 from datetime import datetime, timedelta
+from django.utils import timezone
+from home.models import DailyOperatingHours
 
-def format_time_ago(timestamp):
+
+def get_time_until_next_opening(current_datetime=None):
     """
-    Converts a datetime object into a human-readable 'time ago' format.
-    Example: '5 minutes ago', '2 days ago', 'just now'
+    Returns a message like:
+    - "Opens in 2 hours 30 minutes"
+    - "Opens on Monday at 9:00 AM"
+    or None if no future openings found.
     """
-    if not timestamp:
-        return "unknown time"
 
-    now = datetime.now(timestamp.tzinfo) if timestamp.tzinfo else datetime.now()
-    diff = now - timestamp
+    if current_datetime is None:
+        current_datetime = timezone.localtime()
 
-    seconds = diff.total_seconds()
-    minutes = int(seconds // 60)
-    hours = int(minutes // 60)
-    days = int(hours // 24)
-    weeks = int(days // 7)
-    months = int(days // 30)
-    years = int(days // 365)
+    # Normalize to current local time
+    current_day = current_datetime.weekday()  # Monday = 0, Sunday = 6
 
-    if seconds < 60:
-        return "just now"
-    elif minutes == 1:
-        return "1 minute ago"
-    elif minutes < 60:
-        return f"{minutes} minutes ago"
-    elif hours == 1:
-        return "1 hour ago"
-    elif hours < 24:
-        return f"{hours} hours ago"
-    elif days == 1:
-        return "1 day ago"
-    elif days < 7:
-        return f"{days} days ago"
-    elif weeks == 1:
-        return "1 week ago"
-    elif weeks < 5:
-        return f"{weeks} weeks ago"
-    elif months == 1:
-        return "1 month ago"
-    elif months < 12:
-        return f"{months} months ago"
-    elif years == 1:
-        return "1 year ago"
-    else:
-        return f"{years} years ago"
+    # Fetch all schedule entries
+    operating_hours = DailyOperatingHours.objects.all().order_by('day_of_week')
+
+    if not operating_hours.exists():
+        return None
+
+    # Check current and next 7 days
+    for i in range(8):
+        check_day = (current_day + i) % 7
+        day_hours = operating_hours.filter(day_of_week=check_day).first()
+
+        if not day_hours:
+            continue
+
+        open_time = day_hours.open_time
+        close_time = day_hours.close_time
+
+        # Build full datetime for comparison
+        check_date = (current_datetime + timedelta(days=i)).date()
+        open_datetime = datetime.combine(check_date, open_time).replace(tzinfo=current_datetime.tzinfo)
+        close_datetime = datetime.combine(check_date, close_time).replace(tzinfo=current_datetime.tzinfo)
+
+        # If today but not yet open
+        if i == 0 and current_datetime < open_datetime:
+            time_diff = open_datetime - current_datetime
+            hours, remainder = divmod(time_diff.seconds, 3600)
+            minutes = remainder // 60
+            return f"Opens in {hours} hours {minutes} minutes"
+
+        # If future day
+        if i > 0:
+            weekday_name = open_datetime.strftime("%A")
+            formatted_time = open_datetime.strftime("%I:%M %p").lstrip("0")
+            return f"Opens on {weekday_name} at {formatted_time}"
+
+    return None
