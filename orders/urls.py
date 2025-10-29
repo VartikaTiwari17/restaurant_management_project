@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import PaymentMethodListView
+from .views import apply_coupon
 
 urlpatterns = [
-    path('api/payment-methods/', PaymentMethodListView.as_view(), name='payment-method-list'),
+    path('orders/apply_coupon/', apply_coupon, name='apply_coupon'),
 ]
