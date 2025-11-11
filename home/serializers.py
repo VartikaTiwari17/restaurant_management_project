@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from .models import Feedback
+from .models import DailySpecial
 
-class FeedbackSerializer(serializers.ModelSerializer):
+class DailySpecialSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Feedback
-        fields = ['subject', 'message', 'email']
+        model = DailySpecial
+        fields = ['title', 'description', 'price']  # adjust according to your model fields
