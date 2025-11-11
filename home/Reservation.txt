@@ -1,0 +1,10 @@
+class Reservation(models.Model):
+    customer_name = models.CharField(max_length=100)
+    reservation_datetime = models.DateTimeField()
+    number_of_people = models.IntegerField()
+    special_request = models.TextField(blank=True, null=True)
+
+    objects = ReservationManager()  # attach custom manager
+
+    def __str__(self):
+        return f"{self.customer_name} - {self.reservation_datetime}"

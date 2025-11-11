@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from django.contrib.auth.models import User  # or your custom user model
+from .models import MenuItem
 
-class UserLoyaltySerializer(serializers.ModelSerializer):
+class MenuItemSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
-        fields = ['loyalty_points']
+        model = MenuItem
+        fields = ['id', 'name', 'description', 'price', 'is_spicy']
