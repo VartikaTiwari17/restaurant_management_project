@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from .models import PaymentMethod
+from .models import Reservation
 
-class PaymentMethodSerializer(serializers.ModelSerializer):
+class ReservationSerializer(serializers.ModelSerializer):
     class Meta:
-        model = PaymentMethod
-        fields = '__all__'
+        model = Reservation
+        fields = ['id', 'name', 'email', 'phone_number', 'date', 'time', 'number_of_guests', 'notes']
