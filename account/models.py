@@ -1,13 +1,14 @@
 from django.db import models
-from django.contrib.auth.models import User
-from home.models import MenuItem  # assuming MenuItem already exists
 
-class FavoriteMenuItem(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='favorites')
-    menu_item = models.ForeignKey(MenuItem, on_delete=models.CASCADE, related_name='favorited_by')
-
-    class Meta:
-        unique_together = ('user', 'menu_item')  # prevent duplicate favorites
+class MenuItem(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField(blank=True, null=True)
+    price = models.DecimalField(max_digits=6, decimal_places=2)
+    is_vegetarian = models.BooleanField(default=False)
+    stock_quantity = models.IntegerField(
+        default=0,
+        help_text="Current available stock of this item"
+    )
 
     def __str__(self):
-        return f"{self.user.username} - {self.menu_item.name}"
+        return self.name
