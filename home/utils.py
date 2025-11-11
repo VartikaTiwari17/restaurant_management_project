@@ -1,23 +1,33 @@
-import datetime
+from datetime import datetime, timezone
 
-def format_timedelta_human_readable(delta: datetime.timedelta) -> str:
-    total_seconds = int(delta.total_seconds())
-    
-    # If timedelta is 0
-    if total_seconds == 0:
-        return "0 minutes"
+def get_review_age(created_at):
+    """
+    Returns a human-readable string representing how long ago the review was posted.
+    Example: 'just now', '5 minutes ago', '2 hours ago', '3 days ago', etc.
+    """
+    now = datetime.now(timezone.utc)
+    diff = now - created_at
+    seconds = diff.total_seconds()
 
-    days, remainder = divmod(total_seconds, 86400)  # 86400 = seconds in a day
-    hours, remainder = divmod(remainder, 3600)
-    minutes, _ = divmod(remainder, 60)
+    # Define time intervals
+    minutes = seconds / 60
+    hours = minutes / 60
+    days = hours / 24
+    weeks = days / 7
+    months = days / 30
+    years = days / 365
 
-    parts = []
-
-    if days > 0:
-        parts.append(f"{days} day{'s' if days != 1 else ''}")
-    if hours > 0:
-        parts.append(f"{hours} hour{'s' if hours != 1 else ''}")
-    if minutes > 0:
-        parts.append(f"{minutes} minute{'s' if minutes != 1 else ''}")
-
-    return " ".join(parts)
+    if seconds < 60:
+        return "just now"
+    elif minutes < 60:
+        return f"{int(minutes)} minute{'s' if minutes >= 2 else ''} ago"
+    elif hours < 24:
+        return f"{int(hours)} hour{'s' if hours >= 2 else ''} ago"
+    elif days < 7:
+        return f"{int(days)} day{'s' if days >= 2 else ''} ago"
+    elif weeks < 4:
+        return f"{int(weeks)} week{'s' if weeks >= 2 else ''} ago"
+    elif months < 12:
+        return f"{int(months)} month{'s' if months >= 2 else ''} ago"
+    else:
+        return f"{int(years)} year{'s' if years >= 2 else ''} ago"

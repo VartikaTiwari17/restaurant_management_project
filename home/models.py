@@ -1,13 +1,11 @@
 from django.db import models
 
 
-class MenuItem(models.Model):
-    name = models.CharField(max_length=100)
-    description = models.TextField(blank=True)
-    price = models.DecimalField(max_digits=6, decimal_places=2)
-    is_vegetarian = models.BooleanField(default=False)
-    stock_quantity = models.IntegerField(default=0, help_text="Current available stock of this item")
-    last_modified = models.DateTimeField(auto_now=True)  # ✅ Automatically updates on save
+class UserReview(models.Model):
+    user_name = models.CharField(max_length=100)
+    review_text = models.TextField()
+    rating = models.PositiveIntegerField(default=5)
+    created_at = models.DateTimeField(auto_now_add=True)  # ✅ Records when the review was posted
 
     def __str__(self):
-        return self.name
+        return f"{self.user_name} - {self.rating}★"
