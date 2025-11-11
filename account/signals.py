@@ -1,8 +1,8 @@
-from django.contrib.auth.signals import user_login_failed
+from django.utils import timezone
+from django.contrib.auth.signals import user_logged_in
 from django.dispatch import receiver
-from datetime import datetime
 
-@receiver(user_login_failed)
-def log_failed_login(sender, credentials, **kwargs):
-    username = credentials.get('username', 'Unknown user')
-    print(f"🚨 Failed login attempt for user: {username} at {datetime.now()}")
+@receiver(user_logged_in)
+def update_last_login(sender, request, user, **kwargs):
+    user.last_login = timezone.now()
+    user.save(update_fields=['last_login'])
