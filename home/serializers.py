@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from .models import ContactMessage
+from .models import Feedback
 
-class ContactMessageSerializer(serializers.ModelSerializer):
+class FeedbackStatusSerializer(serializers.ModelSerializer):
     class Meta:
-        model = ContactMessage
-        fields = ['name', 'email', 'subject', 'message', 'created_at']
+        model = Feedback
+        fields = ['id', 'status']
