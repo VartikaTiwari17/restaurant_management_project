@@ -1,6 +1,6 @@
 from django.urls import path
-from home.views import AllergenListView
+from .views import FeedbackSubmissionAPIView
 
 urlpatterns = [
-    path('api/allergens/', AllergenListView.as_view(), name='allergen-list'),
+    path('feedback/submit/', FeedbackSubmissionAPIView.as_view(), name='feedback_submit'),
 ]

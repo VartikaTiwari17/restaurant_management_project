@@ -1,10 +1,7 @@
 from rest_framework import generics
-from home.models import Allergen
-from home.serializers import AllergenSerializer
+from .models import Feedback
+from .serializers import FeedbackSerializer
 
-class AllergenListView(generics.ListAPIView):
-    """
-    API endpoint that returns a list of all available allergens.
-    """
-    queryset = Allergen.objects.all()
-    serializer_class = AllergenSerializer
+class FeedbackSubmissionAPIView(generics.CreateAPIView):
+    queryset = Feedback.objects.all()
+    serializer_class = FeedbackSerializer
