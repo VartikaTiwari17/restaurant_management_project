@@ -1,15 +1,21 @@
 from django.db import models
 
-class RestaurantSettings(models.Model):
-    min_order_value = models.DecimalField(max_digits=10, decimal_places=2, default=15.00)
-    delivery_fee = models.DecimalField(max_digits=10, decimal_places=2, default=5.00)
-    default_currency_symbol = models.CharField(max_length=5, default="$")
-
-    def save(self, *args, **kwargs):
-        # Ensure only one instance exists
-        if RestaurantSettings.objects.exists() and not self.pk:
-            RestaurantSettings.objects.all().delete()
-        super().save(*args, **kwargs)
+# ✅ New model for dietary categories
+class DietaryTag(models.Model):
+    name = models.CharField(max_length=50, unique=True)
 
     def __str__(self):
-        return f"Restaurant Settings ({self.default_currency_symbol})"
+        return self.name
+
+
+# ⚙️ Assuming MenuItem model already exists:
+class MenuItem(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField(blank=True)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    
+    # ✅ Add Many-to-Many field for dietary tags
+    dietary_tags = models.ManyToManyField(DietaryTag, blank=True, related_name='menu_items')
+
+    def __str__(self):
+        return self.name

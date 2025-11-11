@@ -1,6 +1,12 @@
 from django.contrib import admin
-from .models import RestaurantSettings
+from .models import DietaryTag, MenuItem
 
-@admin.register(RestaurantSettings)
-class RestaurantSettingsAdmin(admin.ModelAdmin):
-    list_display = ('min_order_value', 'delivery_fee', 'default_currency_symbol')
+@admin.register(DietaryTag)
+class DietaryTagAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+
+# If MenuItem not already registered, register it
+@admin.register(MenuItem)
+class MenuItemAdmin(admin.ModelAdmin):
+    list_display = ('name', 'price')
+    filter_horizontal = ('dietary_tags',)
