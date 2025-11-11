@@ -1,7 +1,6 @@
-from rest_framework import generics
-from .models import Feedback
-from .serializers import FeedbackSerializer
+from django.shortcuts import render
+from .models import DailySpecial
 
-class FeedbackSubmissionAPIView(generics.CreateAPIView):
-    queryset = Feedback.objects.all()
-    serializer_class = FeedbackSerializer
+def todays_specials(request):
+    specials = DailySpecial.objects.for_today()
+    return render(request, 'home/todays_specials.html', {'specials': specials})

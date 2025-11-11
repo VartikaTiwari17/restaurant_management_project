@@ -1,21 +1,21 @@
 from django.db import models
+from django.utils import timezone
 
-# ✅ New model for dietary categories
-class DietaryTag(models.Model):
-    name = models.CharField(max_length=50, unique=True)
+# ✅ Step 1A: Create custom manager
+class DailySpecialManager(models.Manager):
+    def for_today(self):
+        today = timezone.now().date()
+        return self.filter(valid_on_date=today)
 
-    def __str__(self):
-        return self.name
 
-
-# ⚙️ Assuming MenuItem model already exists:
-class MenuItem(models.Model):
+# ✅ Step 1B: Define or enhance the model
+class DailySpecial(models.Model):
     name = models.CharField(max_length=100)
-    description = models.TextField(blank=True)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-    
-    # ✅ Add Many-to-Many field for dietary tags
-    dietary_tags = models.ManyToManyField(DietaryTag, blank=True, related_name='menu_items')
+    description = models.TextField()
+    valid_on_date = models.DateField()
+
+    # Attach custom manager
+    objects = DailySpecialManager()
 
     def __str__(self):
-        return self.name
+        return f"{self.name} ({self.valid_on_date})"

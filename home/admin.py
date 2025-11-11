@@ -1,12 +1,7 @@
 from django.contrib import admin
-from .models import DietaryTag, MenuItem
+from .models import DailySpecial
 
-@admin.register(DietaryTag)
-class DietaryTagAdmin(admin.ModelAdmin):
-    list_display = ('name',)
-
-# If MenuItem not already registered, register it
-@admin.register(MenuItem)
-class MenuItemAdmin(admin.ModelAdmin):
-    list_display = ('name', 'price')
-    filter_horizontal = ('dietary_tags',)
+@admin.register(DailySpecial)
+class DailySpecialAdmin(admin.ModelAdmin):
+    list_display = ('name', 'valid_on_date')
+    list_filter = ('valid_on_date',)
