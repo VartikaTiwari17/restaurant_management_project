@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import UserLoyaltyPointsView
+from .views import MyReviewsAPIView
 
 urlpatterns = [
-    path('api/my-loyalty-points/', UserLoyaltyPointsView.as_view(), name='user-loyalty-points'),
+    path('api/my-reviews/', MyReviewsAPIView.as_view(), name='my_reviews'),
 ]
