@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import MyReviewsAPIView
+from .views import AddFavoriteMenuItemAPIView
 
 urlpatterns = [
-    path('api/my-reviews/', MyReviewsAPIView.as_view(), name='my_reviews'),
+    path('favorites/add/', AddFavoriteMenuItemAPIView.as_view(), name='add_favorite'),
 ]
