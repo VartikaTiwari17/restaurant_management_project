@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import FeedbackSubmissionAPIView
+from .views import ContactMessageListAPIView
 
 urlpatterns = [
-    path('feedback/submit/', FeedbackSubmissionAPIView.as_view(), name='feedback_submit'),
+    path('api/contact-messages/', ContactMessageListAPIView.as_view(), name='contact_messages_list'),
 ]

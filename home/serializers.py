@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from .models import DailySpecial
+from .models import ContactMessage
 
-class DailySpecialSerializer(serializers.ModelSerializer):
+class ContactMessageSerializer(serializers.ModelSerializer):
     class Meta:
-        model = DailySpecial
-        fields = ['title', 'description', 'price']  # adjust according to your model fields
+        model = ContactMessage
+        fields = ['name', 'email', 'subject', 'message', 'created_at']

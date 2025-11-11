@@ -1,6 +1,7 @@
-from django.shortcuts import render
-from .models import DailySpecial
+from rest_framework import generics
+from .models import ContactMessage
+from .serializers import ContactMessageSerializer
 
-def todays_specials(request):
-    specials = DailySpecial.objects.for_today()
-    return render(request, 'home/todays_specials.html', {'specials': specials})
+class ContactMessageListAPIView(generics.ListAPIView):
+    queryset = ContactMessage.objects.all().order_by('-created_at')
+    serializer_class = ContactMessageSerializer
