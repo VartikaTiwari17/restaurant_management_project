@@ -1,6 +1,8 @@
 from django.contrib import admin
-from .models import Feedback
+from .models import MenuItem
 
-@admin.register(Feedback)
-class FeedbackAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user', 'message', 'rating', 'status', 'created_at')
+@admin.register(MenuItem)
+class MenuItemAdmin(admin.ModelAdmin):
+    list_display = ('name', 'price', 'is_vegetarian')
+    list_filter = ('is_vegetarian',)
+    search_fields = ('name',)

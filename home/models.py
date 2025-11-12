@@ -11,6 +11,8 @@ class MenuItem(models.Model):
     description = models.TextField(blank=True, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     is_active = models.BooleanField(default=True)
+    is_vegetarian = models.BooleanField(default=False)
+
     # ... other existing fields ...
 
     # Attach the custom manager
