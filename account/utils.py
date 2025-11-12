@@ -1,36 +1,13 @@
-import random
-import string
+from django.contrib.auth.models import User
+from .models import LoyaltyPoint
 
-def generate_random_password(length=12):
+def get_user_total_loyalty_points(user):
     """
-    Generate a secure random password with the given length.
-    Includes uppercase, lowercase, digits, and special characters.
+    Returns the total loyalty points for a given user.
+    If the user has no loyalty points, returns 0.
     """
+    if not isinstance(user, User):
+        raise ValueError("Expected a User instance.")
 
-    if length < 8:
-        raise ValueError("Password length should be at least 8 characters for security.")
-
-    # Define all character sets
-    upper = string.ascii_uppercase
-    lower = string.ascii_lowercase
-    digits = string.digits
-    special = string.punctuation
-
-    # Combine all character sets
-    all_chars = upper + lower + digits + special
-
-    # Ensure the password includes at least one character from each type
-    password = [
-        random.choice(upper),
-        random.choice(lower),
-        random.choice(digits),
-        random.choice(special)
-    ]
-
-    # Fill the remaining characters randomly
-    password += random.choices(all_chars, k=length - 4)
-
-    # Shuffle the list to avoid predictable patterns
-    random.shuffle(password)
-
-    return ''.join(password)
+    total_points = LoyaltyPoint.objects.filter(user=user).aggregate(total_points_sum=models.Sum('points'))['total_points_sum']
+    return total_points or 0
