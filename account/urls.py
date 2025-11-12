@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import AddFavoriteMenuItemAPIView
+from .views import UserLoyaltyPointsView
 
 urlpatterns = [
-    path('favorites/add/', AddFavoriteMenuItemAPIView.as_view(), name='add_favorite'),
+    path('loyalty-points/', UserLoyaltyPointsView.as_view(), name='user-loyalty-points'),
 ]
