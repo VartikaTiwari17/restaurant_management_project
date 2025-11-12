@@ -1,7 +1,8 @@
-from rest_framework import serializers
-from .models import Reservation
+from account import serializers
+from orders.models import Table
 
-class ReservationSerializer(serializers.ModelSerializer):
+
+class TableSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Reservation
-        fields = ['id', 'name', 'email', 'phone_number', 'date', 'time', 'number_of_guests', 'notes']
+        model = Table
+        fields = ['id', 'name', 'max_capacity']  # ✅ Added max_capacity
