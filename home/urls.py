@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import RestaurantStatusAPIView
+from .views import DailySpecialListView
 
 urlpatterns = [
-    path('api/restaurant/status/', RestaurantStatusAPIView.as_view(), name='restaurant_status'),
+    path('api/daily-specials/', DailySpecialListView.as_view(), name='daily-special-list'),
 ]
