@@ -1,6 +1,6 @@
-from django.contrib import admin # type: ignore
-from .models import RestaurantImage
-
-@admin.register(RestaurantImage)
-class RestaurantImageAdmin(admin.ModelAdmin):
-    list_display = ('id', 'caption', 'uploaded_at')
+from django.contrib import admin # pyright: ignore[reportMissingModuleSource]
+from .models import DailySpecial
+@admin.register(DailySpecial)
+class DailySpecialAdmin(admin.ModelAdmin):
+    list_display = ('name', 'price', 'is_active')
+    list_filter = ('is_active',)

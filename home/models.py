@@ -1,9 +1,11 @@
-from django.db import models # type: ignore
+from account import models
 
-class RestaurantImage(models.Model):
-    image = models.ImageField(upload_to='restaurant_gallery/')
-    caption = models.CharField(max_length=255, blank=True, null=True)
-    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+class DailySpecial(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField()
+    price = models.DecimalField(max_digits=6, decimal_places=2)
+    is_active = models.BooleanField(default=True)  # New field
 
     def __str__(self):
-        return self.caption if self.caption else f"Image {self.id}"
+        return self.name
