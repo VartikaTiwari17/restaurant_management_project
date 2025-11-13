@@ -1,11 +1,9 @@
-from account import models
+from django.db import models # type: ignore
 
+class RestaurantImage(models.Model):
+    image = models.ImageField(upload_to='restaurant_gallery/')
+    caption = models.CharField(max_length=255, blank=True, null=True)
+    uploaded_at = models.DateTimeField(auto_now_add=True)
 
-class MenuItem(models.Model): # pyright: ignore[reportUndefinedVariable]
-    name = models.CharField(max_length=100)
-    price = models.DecimalField(max_digits=6, decimal_places=2)
-    is_vegetarian = models.BooleanField(default=False)
-    preparation_time_minutes = models.IntegerField(null=True, blank=True)  # ⏱️ New field
-    
     def __str__(self):
-        return self.name
+        return self.caption if self.caption else f"Image {self.id}"

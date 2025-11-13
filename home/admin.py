@@ -1,6 +1,6 @@
 from django.contrib import admin # type: ignore
-from .models import MenuItem
+from .models import RestaurantImage
 
-@admin.register(MenuItem)
-class MenuItemAdmin(admin.ModelAdmin):
-    list_display = ('name', 'price', 'is_vegetarian', 'preparation_time_minutes')
+@admin.register(RestaurantImage)
+class RestaurantImageAdmin(admin.ModelAdmin):
+    list_display = ('id', 'caption', 'uploaded_at')
