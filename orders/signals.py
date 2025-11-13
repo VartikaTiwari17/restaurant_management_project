@@ -1,16 +1,15 @@
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-from orders.models import Order
-from account.models import LoyaltyPoint
+from django.db.models.signals import post_delete # type: ignore
+from django.dispatch import receiver # type: ignore
+from orders.models import OrderItem
+from home.models import MenuItem  # assuming MenuItem model has stock_quantity field
 
-@receiver(post_save, sender=Order)
-def award_loyalty_points_on_order(sender, instance, created, **kwargs):
+
+@receiver(post_delete, sender=OrderItem)
+def update_inventory_on_order_item_delete(sender, instance, **kwargs):
     """
-    Automatically award loyalty points when a new order is created.
+    When an OrderItem is deleted, restore its quantity to the MenuItem's stock.
     """
-    if created:  # Only for newly created orders
-        user = instance.user
-        # Find or create loyalty record for this user
-        loyalty, _ = LoyaltyPoint.objects.get_or_create(user=user)
-        loyalty.points += 50  # Add fixed 50 points
-        loyalty.save()
+    menu_item = instance.menu_item
+    if hasattr(menu_item, 'stock_quantity'):  # Ensure field exists
+        menu_item.stock_quantity += instance.quantity
+        menu_item.save()
