@@ -1,8 +1,7 @@
-from account import serializers
-from orders.models import Table
+from rest_framework import serializers # type: ignore
+from .models import Reservation
 
-
-class TableSerializer(serializers.ModelSerializer):
+class ReservationSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Table
-        fields = ['id', 'name', 'max_capacity']  # ✅ Added max_capacity
+        model = Reservation
+        fields = '__all__'  # includes all fields like id, name, date, time, etc.
